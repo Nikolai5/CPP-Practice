@@ -1,10 +1,10 @@
 #include <iostream>
 #include <fstream>
-#include <string>
+#include <string> // The reason string was working without this is that iostream includes it. Still important to do this.
 
 int main(int argc, char *argv[]) {
 	int num;
-	std::string lineText; // Find out why I don't need to #include <string>
+	std::string lineText;
 
 	std::cout << "Number of arguments: " << argc - 1 << std::endl;
 	if (argc > 1) {

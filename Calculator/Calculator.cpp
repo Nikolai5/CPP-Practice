@@ -4,12 +4,15 @@
 float num1 = 0.0, num2 = 0.0, result = 0.0;
 char operation = '+';
 bool firstRun = true;
+bool userError = false;
 
 void updateScreen(bool valid) {
-    std::cout << std::string(100, '\n');
+    for(int i = 0; i < 80; i++){
+        std::cout << std::endl;
+    }
 
     if(!valid){
-        std::cout << "INVALID ENTRY - Please try again." << std::endl;
+        std::cout << "INVALID INPUT - Please try again." << std::endl;
     }
 
     std::cout << "--- Calculator App ---" << std::endl;
@@ -30,6 +33,12 @@ bool calculate(){
         case '*': case 'x':
             result = num1 * num2;
             break;
+        case '/':
+            if(num2 == 0){
+                return false;
+            }
+            result = num1 / num2;
+            break;
         default:
             return false;
     }
@@ -38,18 +47,33 @@ bool calculate(){
 }
 
 int main() {
-    
+
+    std::string inputNum1, inputNum2;
+
     if(firstRun){
         updateScreen(true);
         firstRun = false;
+    } else if (userError){
+        updateScreen(false);
+        userError = false;
     }
+    
     std::cout << "Enter First Number : ";
-    std::cin >> num1;
+    std::cin >> inputNum1;
     std::cout << std::endl;
+
+    try {
+        num1 = std::stof(inputNum1);
+    }
+    catch(const std::exception& e) {
+        inputNum1 = "0.00";
+        userError = true;
+        main();
+    }
 
     updateScreen(true);
 
-    std::cout << "Enter Operator (+, -, *) : ";
+    std::cout << "Enter Operator (+, -, *, /) : ";
     std::cin >> operation;
     std::cout << "User Operator: " << operation;
     std::cout << std::endl;
@@ -57,11 +81,20 @@ int main() {
     updateScreen(true);
 
     std::cout << "Enter Second Number : ";
-    std::cin >> num2;
+    std::cin >> inputNum2;
     std::cout << std::endl;
 
+    try {
+        num2 = std::stof(inputNum2);
+    }
+    catch(const std::exception& e) {
+        inputNum2 = "0.00";
+        userError = true;
+        main();
+    }
+
     calculate() ? updateScreen(true) : updateScreen(false);
-    main();
+    main();    
 
     return 0;
 }

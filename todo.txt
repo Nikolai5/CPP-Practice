@@ -1,0 +1,10 @@
+References
+Pointers
+OOP Practices
+Structures
+std::map (Could try to transform calculator into ascii art using map)
+multithreading
+mysql
+ncurses
+multiplatform GUI
+GTK GUI
