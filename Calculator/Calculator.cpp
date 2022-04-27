@@ -46,6 +46,29 @@ bool calculate(){
     return true;
 }
 
+bool validateInput(std::string userInput, int whichNumber){
+    switch (whichNumber){
+        case 1:
+            if(num1 = std::stof(userInput)){
+                return true;
+            } else {
+                userError = true;
+                return false;
+            }
+        break;
+        case 2:
+            if(num2 = std::stof(userInput)){
+                return true;
+            } else {
+                userError = true;
+                return false;
+            }
+        break;
+    }
+
+    return false;
+}
+
 int main() {
 
     std::string inputNum1, inputNum2;
@@ -59,17 +82,13 @@ int main() {
     }
     
     std::cout << "Enter First Number : ";
-    std::cin >> inputNum1;
-    std::cout << std::endl;
-
-    try {
-        num1 = std::stof(inputNum1);
-    }
-    catch(const std::exception& e) {
-        inputNum1 = "0.00";
+    if(std::cin >> num1){
+        std::cout << "Succ";
+    } else {
         userError = true;
-        main();
+        std::cin.ignore('\n'); // need to figure out how to sanitise the stream to get input cleanly.
     }
+    std::cout << std::endl;
 
     updateScreen(true);
 
@@ -84,12 +103,7 @@ int main() {
     std::cin >> inputNum2;
     std::cout << std::endl;
 
-    try {
-        num2 = std::stof(inputNum2);
-    }
-    catch(const std::exception& e) {
-        inputNum2 = "0.00";
-        userError = true;
+    if(!validateInput(inputNum2, 2)){ // Potentially not needed.
         main();
     }
 
